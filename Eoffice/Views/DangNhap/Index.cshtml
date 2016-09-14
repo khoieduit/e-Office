@@ -1,0 +1,106 @@
+﻿@model Eoffice.Models.DangNhapModel
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Hệ thống e-Office || Trường Đại Học Quảng Nam</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="~/Assets/Font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/Assets/Simple-icon/simple-line-icons.min.css" rel="stylesheet" />
+        <link href="~/Assets/Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN GLOBAL STYLES -->
+        <link href="~/Assets/Css/components.min.css" rel="stylesheet" />
+
+        <!-- END GLOBAL STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+        <link href="~/Assets/Css/login-2.min.css" rel="stylesheet" />
+        <link href="~/Assets/Css/style.css" rel="stylesheet" />
+        <!-- END PAGE LEVEL STYLES -->
+        <!-- BEGIN ICON -->
+        <link rel="shortcut icon" href="favicon.ico" />
+        <!-- END ICON -->
+    </head>
+    <!-- END HEAD -->
+
+    <body class=" login">
+        <div class="logo">
+            <h1 style="color:#fff; font-size: 51px;">Hệ thống e-Office</h1>
+            <h4><strong style="color:#fff">TRƯỜNG ĐẠI HỌC QUẢNG NAM</strong></h4>
+        </div>
+
+        <div class="content">
+            <!-- BEGIN LOGIN FORM -->
+            @if (!ViewData.ModelState.IsValidField("message")) {
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong><i class="fa fa-exclamation-circle" aria-hidden="true"></i></strong> @Html.ValidationMessage("message")
+            </div>
+            }
+           @using(Html.BeginForm("Index","DangNhap",FormMethod.Post,new{@class="login-form"})){
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                @Html.TextBoxFor(model => model.TaiKhoan, new { @class = "form-control form-control-solid placeholder-no-fix", @placeholder = "Tên đăng nhập", @autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.TaiKhoan,"", new {@class="error" })
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                @Html.PasswordFor(model => model.MatKhau, new { @class = "form-control form-control-solid placeholder-no-fix", Placeholder = "Mật khẩu", @autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class="error"})
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn red btn-block uppercase">Đăng nhập</button>
+            </div>
+            <div class="form-actions">
+                <div class="pull-left">
+                    <label class="rememberme check">
+                        <input type="checkbox" name="remember" value="1" /> Nhớ mật khẩu
+                    </label>
+                </div>
+                <div class="pull-right forget-password-block">
+                    <a href="javascript:;" id="forget-password" class="forget-password">Quên mật khẩu?</a>
+                </div>
+            </div>
+               
+           }
+                
+            <!-- END LOGIN FORM -->
+            <!-- BEGIN FORGOT PASSWORD FORM -->
+            <form class="forget-form" action="index.html" method="post">
+                <div class="form-title">
+                    <span class="form-title">Quên mật khẩu?</span>
+                    <span class="form-subtitle">Nhập email để thay đổi mật khẩu</span>
+                </div>
+                <div class="form-group">
+                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" />
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="back-btn" class="btn btn-default back">Trở về</button>
+                    <button type="submit" class="btn btn-primary uppercase pull-right sub">Tiếp tục</button>
+                </div>
+            </form>
+            <!-- END FORGOT PASSWORD FORM -->
+        </div>
+        <!-- BEGIN CORE PLUGINS -->
+        <!-- JQUERY -->
+        <script src="~/Assets/Jquery/jquery-1.10.2.min.js"></script>
+        <!-- END JQUERY -->
+        <!-- BOOTSTRAP -->
+        <script src="~/Assets/Bootstrap/js/bootstrap.min.js"></script>
+        <!-- END BOOTSTRAP-->
+        <!-- JQUERY VALIDATE -->
+        <script src="~/Assets/Jquery-validation/js/jquery.validate.min.js"></script>
+        <!-- END JQUERY VALIDATE -->
+        <!-- LOGIN JAVASCRIPT -->
+        <script src="~/Assets/Js/login.min.js"></script>
+        <!-- END LOGIN JAVASCRIPT -->
+    </body>
+</html>
+

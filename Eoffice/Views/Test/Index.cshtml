@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- message -->
+<div class="alert alert-success" id="border-left-alert">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Thông báo :</strong>
+    <span>Thêm thành công !</span>
+</div>
+<!-- end message -->
+<!-- data table -->
+<div class="portlet box red">
+    <div class="portlet-title" id="titletable">
+        <div class="caption" id="listtable">
+            <i class="fa fa-building-o icon" aria-hidden="true"></i>Báo cáo công việc
+        </div>
+
+
+        <div class="tools"> </div>
+    </div>
+    <div class="portlet-body">
+        <form action="" method="POST" class="" role="form">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Nội dung:</label>
+                    <textarea class="form-control" placeholder="Nội dung báo cáo..."></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label" for="">Ghi chú:</label>
+                    <textarea class="form-control" placeholder="Ghi chú..."></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary">Báo cáo</button>
+            </div>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>
+<!-- end data table -->
+

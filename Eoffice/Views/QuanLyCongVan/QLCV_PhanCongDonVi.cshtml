@@ -1,0 +1,228 @@
+﻿@using Models.Dao
+@model List<Models.ViewModel.CongVanDenViewModel>
+@{
+    ViewBag.Title = "Phân công cho đơn vị";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="portlet box red">
+    <div class="portlet-title" id="titletable">
+        <div class="caption" id="listtable">
+            <i class="fa fa-building-o icon" aria-hidden="true"></i>Phân công cho đơn vị xử lý
+        </div>
+        <div class="tools"> </div>
+    </div>
+    <div class="portlet-body">
+        <!-- tab -->
+        <div role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#chuyenphancong" aria-controls="chuyenphancong" role="tab" data-toggle="tab">Phân cho đơn vị xử lý</a>
+                </li>
+                <li role="presentation">
+                    <a href="#phancong" aria-controls="phancong" role="tab" data-toggle="tab">Công văn đã phân công</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="chuyenphancong">
+                    <!-- Chuyển phân công -->
+                    @using (Html.BeginForm("QLCV_PhanCongDonVi", "QuanLyCongVan", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" name="id_cvden" value="@ViewBag.id_congvanden" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Đơn vị nhận phân công</label>
+                                    <select name="DVnhanphancong" class="form-control">
+                                        <option value="">----Chọn đơn vị ----</option>
+                                        @{
+                                        int quyenhan = 4;
+                                        var result = QLCV_CongVanDenDao.DanhSachCanBo(quyenhan);
+                                        }
+                                        @foreach (var item in result)
+                                        {
+                                            <option value="@QLCV_CongVanDenDao.TenDonVi(@item.MaDonVi).MaDonVi">@QLCV_CongVanDenDao.TenDonVi(@item.MaDonVi).TenDonVi (@QLCV_CongVanDenDao.TenCanBo(@item.MaCanBo).TenCanBo)</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="control-label">Thời gian xử lý</label>
+                                <input type="date" class="form-control" name="thoigianxuly" />
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Nội dung chuyển phân công Xử lý</label>
+                                    <textarea name="noidung" class="form-control" placeholder="Nội chung chuyển phân công..." rows="8"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Ghi chú</label>
+                                    <textarea name="ghichu" class="form-control" placeholder="Nội chung chuyển phân công..." rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Chuyển phân công</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-ban" aria-hidden="true"></i> Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    <!-- nội dung công văn -->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="phancong">
+                    <table class="table table-striped table-bordered table-hover" id="tabledanhba">
+                        <thead id="theadtable">
+                            <tr>
+                                <th> STT </th>
+                                <th>đơn vị gửi công văn</th>
+                                <th>Số văn bản</th>
+                                <th>Loại văn bản</th>
+                                <th>Ngày đến</th>
+                                <th>Chuyển phân công</th>
+                                <th>Xem chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                i++;
+                                <tr class="rowcolor2">
+                                    <td> @i </td>
+                                    <td> @item.DonViNgoai </td>
+                                    <td> @item.SoVanBan </td>
+                                    <td> @QLCV_CongVanDenDao.TenLoaiVanBan(@item.MaLoai) </td>
+                                    <td> @string.Format("{0:dd/MM/yyyy}", @item.NgayDen) </td>
+                                    <td> @QLCV_CongVanDenDao.TenCanBo(@item.MaCanBoNhanPhanCong) </td>
+                                    <td class="btncenter">
+                                        <a class="btn btn-default " data-toggle="modal" href='#modal-id'><i class="fa fa-eye" aria-hidden="true"></i> Xem Chi tiết</a>
+                                        <div class="modal fade" id="modal-id">
+                                            <div class="modal-dialog modelwidth">
+                                                <div class="modal-content">
+                                                    <div class="modal-header title-model">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title text-center">Chi tiết Công văn chuyển phân công</h4>
+                                                    </div>
+                                                    <div class="modal-body modalpadd">
+                                                        <div class="toppad">
+                                                            <div class="panel panel-info panelboder">
+                                                                <div class="portlet light">
+                                                                    <div class="portlet-body" id="scrollbar">
+                                                                        <div class="panel-body scroll" id="scrollbar">
+                                                                            <div class="row">
+                                                                                <table class="table table-bordered table-hover">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Số văn bản:</td>
+                                                                                            <td class="tdright">@item.SoVanBan</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Loại văn bản:</td>
+                                                                                            <td class="tdright">@QLCV_CongVanDenDao.TenLoaiVanBan(@item.MaLoai)</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Đơn vị gởi công văn:</td>
+                                                                                            <td class="tdright">@item.DonViNgoai</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Ngày tháng văn bản:</td>
+                                                                                            <td class="tdright">@string.Format("{0:dd/MM/yyyy}", @item.NgayThangVanban)</td>
+                                                                                        </tr>
+
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Người ký văn bản:</td>
+                                                                                            <td class="tdright">
+                                                                                                @item.NguoiKyVanBan
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Ngày văn bản đến:</td>
+                                                                                            <td class="tdright">
+                                                                                                @string.Format("{0:dd/MM/yyyy}", @item.NgayDen)
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Trích yếu:</td>
+                                                                                            <td class="tdright">
+                                                                                                @item.TrichYeu
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Tập tin đính kèm:</td>
+                                                                                            <td class="tdright">
+                                                                                                <a href="" class="btn btn-success">Xem</a>
+                                                                                                <a href="" class="btn btn-primary">Tải về</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft"> Số trang:</td>
+                                                                                            <td class="tdright">@item.SoTrang</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft"> Số bản:</td>
+                                                                                            <td class="tdright">@item.SoBan </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft"> Người nhận văn bản:</td>
+                                                                                            <td class="tdright">@item.NguoiNhan</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft"> Ngày trình:</td>
+                                                                                            <td class="tdright">@string.Format("{0:dd/MM/yyyy}", @item.NgayTrinh)</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Ghi chú:</td>
+                                                                                            <td>@item.GhiChu</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Cán bộ nhận phân công :</td>
+                                                                                            <td>@QLCV_CongVanDenDao.TenCanBo(@item.MaCanBoNhanPhanCong)</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="tdleft">Báo cáo :</td>
+                                                                                            <td>@item.NoiDungBaoCao</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- end tab -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end tab -->
+        <div class="clearfix"></div>
+    </div>
+</div>

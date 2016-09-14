@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eoffice", "Eoffice\Eoffice.csproj", "{354F2B99-E63C-4AF3-BA85-3B10AA66E28E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{952E9621-E30A-4617-87BE-3D1711001654}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{354F2B99-E63C-4AF3-BA85-3B10AA66E28E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{354F2B99-E63C-4AF3-BA85-3B10AA66E28E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{354F2B99-E63C-4AF3-BA85-3B10AA66E28E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{354F2B99-E63C-4AF3-BA85-3B10AA66E28E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952E9621-E30A-4617-87BE-3D1711001654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952E9621-E30A-4617-87BE-3D1711001654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952E9621-E30A-4617-87BE-3D1711001654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952E9621-E30A-4617-87BE-3D1711001654}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

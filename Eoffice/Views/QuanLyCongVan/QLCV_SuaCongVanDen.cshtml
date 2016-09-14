@@ -1,0 +1,148 @@
+﻿@model Models.EntityFramework.CONGVANDEN
+
+@{
+    ViewBag.Title = "Sửa công văn đến";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jssection{
+    <script>
+        $("#selectfile").on("click", function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $("#LinknoiDung").val(url);
+            };
+            finder.popup();
+        });
+    </script>
+}
+<!-- message -->
+<div class="alert alert-success" id="border-left-alert">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Thông báo :</strong>
+    <span>Thêm thành công !</span>
+</div>
+<!-- end message -->
+<!-- end message -->
+<!-- data table -->
+<div class="portlet box red">
+    <div class="portlet-title" id="titletable">
+        <div class="caption" id="listtable">
+            <i class="fa fa-building-o icon" aria-hidden="true"></i>Sửa công văn đến
+        </div>
+        <div class="tools"> </div>
+    </div>
+    <div class="portlet-body">
+
+        @using (Html.BeginForm("QLCV_SuaCongVanDen", "QuanLyCongVan", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ID_CongVanDen, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.ID_CongVanDen, new { @class = "form-control", @placeholder = "Số công văn...", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.ID_CongVanDen, "", new { @class = "errors" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DonViNgoai, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.DonViNgoai, new { @class = "form-control", @placeholder = "Tên đơn vị gửi công văn.." })
+                    @Html.ValidationMessageFor(model => model.DonViNgoai, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MaLoai, new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.MaLoai, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaLoai, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoVanBan, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.SoVanBan, new { @class = "form-control", @placeholder = "Số ký hiệu..." })
+                    @Html.ValidationMessageFor(model => model.SoVanBan, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayThangVanban, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.NgayThangVanban,"{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NgayThangVanban, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayDen, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.NgayDen,"{0:yyyy-MM-dd}", new { @class = "form-control", @placeholder = "Ngày tháng văn bản đến...", @type = "date" })
+                    @Html.ValidationMessageFor(model => model.NgayDen, "", new { @class = "errors" })
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TrichYeu, new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.TrichYeu, new { @class = "form-control", @placeholder = "Trích yếu..." })
+                    @Html.ValidationMessageFor(model => model.TrichYeu, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoTrang, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.SoTrang, new { @class = "form-control", @placeholder = "Số trang..." })
+                    @Html.ValidationMessageFor(model => model.SoTrang, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoBan, new { @class = "control-label " })
+                    @Html.TextBoxFor(model => model.SoBan, new { @class = "form-control", @placeholder = "Số bản..." })
+                    @Html.ValidationMessageFor(model => model.SoBan, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LinknoiDung, new { @class = "control-label" })
+                    <div class="clearfix"></div>
+                    <div class="col-md-9" style="padding:0px;">
+                        @Html.TextBoxFor(model => model.LinknoiDung, new { @class = "form-control", @placeholder = "tập tin đính kèm", @readonly = true })
+                    </div>
+                    <div class="col-md-3">
+                        <a href="javascript:void(0);" title="chọn file đính kèm" class="btn btn-info" id="selectfile"><i class="fa fa-file" aria-hidden="true"></i> Chọn file</a>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.LinknoiDung)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NguoiKyVanBan, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.NguoiKyVanBan, new { @class = "form-control", @placeholder = "Người ký văn bản" })
+                    @Html.ValidationMessageFor(model => model.NguoiKyVanBan, "", new { @class = "errors" })
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GhiChu, new { @class = "control-label " })
+                    @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control", @placeholder = "Ghi chú..." })
+                    @Html.ValidationMessageFor(model => model.GhiChu)
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Sửa công văn</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-ban" aria-hidden="true"></i> Cancel</button>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        }
+    </div>
+</div>
